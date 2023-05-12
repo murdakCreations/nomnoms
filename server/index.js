@@ -29,7 +29,7 @@ const Recipe = require('./model/Recipe')
 
 // GET Route
 app.get('/get-recipe', async(req, res) => {
-    const recipes = await Recipe.find({ingredientName: "chicken cut into serving pieces"})
+    const recipes = await Recipe.find()
     try{
         res.status(200).json({
             status: 'Success',
@@ -68,7 +68,7 @@ app.post('/add-recipe', async(req, res) => {
 // GET Route according to ingredient
 app.get('/search-recipe/:ingredient',async(req, res) => {
     const recipes = await Recipe.find(
-        { ingredient: { $elemMatch: { ingredientName: req.params.ingredient } } }
+        { ingredient: { $elemMatch: { ingredientName: {$regex: req.params.ingredient} } } }
      )
     try{
         res.status(200).json({
