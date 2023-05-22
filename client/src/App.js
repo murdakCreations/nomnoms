@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from "react"
 import Axios from 'axios'
 import './App.css'
 
+
 /*App version to show or hide component */
 class App extends Component {
   constructor(){
@@ -22,7 +23,7 @@ class App extends Component {
   
   // GET using Axios search ingredient
   searchRecipe = () => {
-    Axios.get(`https://nomnoms-backend.vercel.app/search-recipe/${this.state.name}`).then(({ data }) => {
+    Axios.get(`http://localhost:8080/search-recipe/${this.state.name}`).then(({ data }) => {
       this.setState({
         searched: data.data.recipes
       })

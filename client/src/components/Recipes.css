@@ -1,0 +1,38 @@
+.recipes #procedures li {
+    list-style-type:decimal;
+}
+
+.recipes .container h1{
+    text-align: center;
+    font-size: 3em;
+    font-family: 'Jockey One', sans-serif;
+}
+
+.recipes .recipe {
+    display: inline-flex;
+    margin: 5% 20%;
+}
+
+.recipes .recipeContent {
+    width: 50%;
+}
+
+.recipes .container img {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -100;
+    opacity: 0.5;
+    width: 30rem;
+    margin: auto;
+}
+
+.recipes .recipeContent {
+    font-size: 1em;
+}
+
+.recipes .container {
+    margin: 5%;
+}

@@ -1,0 +1,45 @@
+.home h1 {
+    font-family: 'Jockey One', sans-serif;
+    font-size: 7rem;
+}
+
+@font-face {
+    font-family: jejuMyeongjo;
+    src: url(JejuMyeongjo-Regular.woff);
+}
+
+.home h5 {
+    font-family: jejuMyeongjo;
+    font-size: 1.5rem;
+}
+
+.home #getStarted {
+    display: grid;
+    place-items: center;
+}
+
+.home #getStarted div {
+    background-color: #34BA13;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0.1em 0.8em;
+    margin: 2.5em;
+    border: none;
+    border-radius: 0.5em;
+    width: fit-content;
+    
+}
+
+.home #getStarted a {
+    color: inherit;
+    
+}
+
+.home h3 {
+    font-size: 2.7rem;
+}
+
+.home .container {
+    margin: 5em;
+    text-align: center;
+}

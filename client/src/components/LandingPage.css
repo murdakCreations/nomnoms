@@ -1,0 +1,58 @@
+.landingPage .searchBar h3 {
+    color: #fff;
+    font-size: 1.3em;
+    margin: 1em;
+}
+
+.landingPage .searchBar input {
+    border: none;
+    border-radius: 1em;
+    padding: 0.2em 0.8em;
+    font-size: 1.3em;
+}
+
+.landingPage .searchBar button {
+    border: none;
+    background-color: #34BA13;
+    color: #fff;
+    border-radius: 1em;
+    padding: 0.1em 0.8em;
+    font-size: 1.3em;
+    margin: 1em;
+}
+
+.landingPage .searchBar {
+    margin: 5em;
+}
+
+.landingPage .searchRes {
+    text-align: center;
+}
+
+.landingPage .searchRes .resBtn {
+    display: inline-block;
+    background-color: #6C6763;
+    width: 10rem;
+    height: 13rem;
+    border: none;
+    margin: 1em;
+    border-radius: 1em;
+}
+
+.landingPage .searchRes .resBtn img {
+    width: 9rem;
+    height: 8rem;
+}
+
+.landingPage .searchRes .resBtn:hover {
+    background-color: #484440;
+}
+
+.landingPage .searchRes .resLbl {
+    color: #fff;
+    font-size: 1.5em;
+}
+
+.landingPage .searchResContainer {
+    text-align: center;
+}

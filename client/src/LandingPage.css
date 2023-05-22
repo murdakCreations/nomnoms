@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #1C1D1F;
+    color: #fff;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Jockey One', sans-serif;
+    font-size: 7rem;
+}
+
+@font-face {
+    font-family: jejuMyeongjo;
+    src: url(../public/JejuMyeongjo-Regular.woff);
+}
+
+h5 {
+    font-family: jejuMyeongjo;
+    font-size: 1.5rem;
+}
+
+button {
+    background-color: #34BA13;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0.1em 0.8em;
+    margin: 2.5em;
+    border: none;
+    border-radius: 0.5em;
+}
+
+h3 {
+    font-size: 2.7rem;
+}
+
+.container {
+    margin: 5em;
+}
