@@ -57,7 +57,7 @@
     text-align: center;
 }
 
-@media (min-width: 380px) {
+@media screen and (min-width: 380px) and (max-width: 767px) {
     .landingPage .searchBar h3 {
         font-size: 1em;
     }   
