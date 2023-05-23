@@ -49,7 +49,7 @@ class LandingPage extends Component{
                 <h3>What can I make with...</h3>
                 <input type="text" placeholder="Enter Food" onChange={(e) => {
                     this.setState({
-                    name: e.target.value
+                    name: e.target.value.toLowerCase()
                     })
                 }}/><br/>
                 <button onClick={this.searchRecipe}>Search</button>

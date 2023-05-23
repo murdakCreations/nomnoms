@@ -56,3 +56,22 @@
 .landingPage .searchResContainer {
     text-align: center;
 }
+
+@media (min-width: 380px) {
+    .landingPage .searchBar h3 {
+        font-size: 1em;
+    }   
+    
+    .landingPage .searchBar input {
+        font-size: 1em;
+    }
+
+    .landingPage .searchBar button {
+        font-size: 1em;
+    }
+
+    .landingPage .searchRes h2 {
+        font-size: 1em;
+    }
+
+}

@@ -1,3 +1,7 @@
+.recipes {
+    margin-top: 5em;
+}
+
 .recipes #procedures li {
     list-style-type:decimal;
 }
@@ -10,7 +14,7 @@
 
 .recipes .recipe {
     display: inline-flex;
-    margin: 5% 20%;
+    margin: 5% 10%;
 }
 
 .recipes .recipeContent {
@@ -35,4 +39,18 @@
 
 .recipes .container {
     margin: 5%;
+}
+
+@media (min-width: 380px) {
+    .recipes .container h1 {
+        font-size: 2em;
+    }
+
+    .recipes .container img {
+        width: 20rem;
+    }
+
+    .recipes .recipeContent {
+        margin: 0.2em;
+    }
 }
