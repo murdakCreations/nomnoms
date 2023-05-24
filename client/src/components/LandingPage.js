@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import './LandingPage.css'
 import { Link } from "react-router-dom"
 import Axios from 'axios'
-import { Recipes } from './Recipes'
 
 class LandingPage extends Component{
     constructor(){
@@ -17,7 +16,7 @@ class LandingPage extends Component{
       
       // GET using Axios search ingredient
       searchRecipe = () => {
-        Axios.get(`https://nomnoms-backend.vercel.app/search-recipe/${this.state.name}`).then(({ data }) => {
+        Axios.get(`http://localhost:8080/search-recipe/${this.state.name}`).then(({ data }) => {
           this.setState({
             searched: data.data.recipes
           })
@@ -46,13 +45,14 @@ class LandingPage extends Component{
         <div className='landingPage'>
             <div className="container">
                 <div className="searchBar">
-                <h3>What can I make with...</h3>
-                <input type="text" placeholder="Enter Food" onChange={(e) => {
-                    this.setState({
-                    name: e.target.value.toLowerCase()
-                    })
-                }}/><br/>
-                <button onClick={this.searchRecipe}>Search</button>
+                  <h3>What can I make with...</h3>
+                  <input type="text" id='food' placeholder="Enter Food" onChange={(e) => {
+                      this.setState({
+                      name: e.target.value.toLowerCase()
+                      })
+                  }}/><br/>
+                  <button onClick={this.searchRecipe}>Search</button>
+                  <div id='dispBtn'><Link to="/displayAll">Display All Recipe</Link></div>
                 </div>
                 <div className='searchResContainer'>
                     <div className="searchRes" style={this.state.searchClick ? {display:"inline-block"}: {display:"none"}}>

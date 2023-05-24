@@ -37,6 +37,8 @@
     border: none;
     margin: 1em;
     border-radius: 1em;
+    padding: 0.3em;
+    overflow: hidden;
 }
 
 .landingPage .searchRes .resBtn img {
@@ -55,6 +57,14 @@
 
 .landingPage .searchResContainer {
     text-align: center;
+}
+
+.landingPage #dispBtn a{
+    color: #fff;
+}
+
+.landingPage #dispBtn a:hover{
+    color: #bfb6b6;
 }
 
 @media screen and (min-width: 380px) and (max-width: 767px) {

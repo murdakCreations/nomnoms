@@ -1,0 +1,46 @@
+.displayAllPage {
+    margin: 5em;
+}
+
+.displayAllPage .searchRes {
+    text-align: center;
+}
+
+.displayAllPage .searchRes .resBtn {
+    display: inline-block;
+    background-color: #6C6763;
+    width: 10rem;
+    height: 13rem;
+    border: none;
+    margin: 1em;
+    border-radius: 1em;
+    padding: 0.3em;
+    overflow: hidden;
+}
+
+.displayAllPage .searchRes .resBtn img {
+    width: 9rem;
+    height: 8rem;
+}
+
+.displayAllPage .searchRes .resBtn:hover {
+    background-color: #484440;
+}
+
+.displayAllPage .searchRes .resLbl {
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.landisplayAllPagedingPage .searchResContainer {
+    text-align: center;
+}
+
+
+@media screen and (min-width: 380px) and (max-width: 767px) {
+    
+    .displayAllPage .searchRes h2 {
+        font-size: 1em;
+    }
+
+}

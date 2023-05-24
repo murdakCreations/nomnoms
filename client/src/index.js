@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import { Home } from "./components/Home"
 import LandingPage from './components/LandingPage';
 import Recipes from './components/Recipes';
+import DisplayAll from './components/DisplayAll';
 
 import {
   createBrowserRouter,
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/recipe",
     element: <Recipes/>,
+  },
+  {
+    path: "/displayAll",
+    element: <DisplayAll/>,
   },
 ]);
 
