@@ -1,13 +1,16 @@
 import React, {Component} from "react"
 import './Recipes.css'
 import Axios from 'axios'
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom'
 
 function Recipes(){
     const location = useLocation();
     const data = location.state.recipe
     return (
         <div className="recipes">
+            <nav>
+                <div id='back'><Link to="/displayAll">Back</Link></div>
+            </nav>
             <div className="container">
             <h1>{data.recipeName}</h1>
             <div className="recipe">

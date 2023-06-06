@@ -36,9 +36,19 @@
     text-align: center;
 }
 
+#back a {
+    color: #fff;
+}
+
+#back a:hover {
+    color: #6C6763;
+}
+
+.displayAllPage #addBtn a{
+    float: left;
+}
 
 @media screen and (min-width: 380px) and (max-width: 767px) {
-    
     .displayAllPage .searchRes h2 {
         font-size: 1em;
     }

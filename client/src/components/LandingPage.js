@@ -16,7 +16,7 @@ class LandingPage extends Component{
       
       // GET using Axios search ingredient
       searchRecipe = () => {
-        Axios.get(`https://nomnoms-backend.vercel.app/search-recipe/${this.state.name}`).then(({ data }) => {
+        Axios.get(`http://localhost:8080/search-recipe/${this.state.name}`).then(({ data }) => {
           this.setState({
             searched: data.data.recipes
           })

@@ -18,6 +18,11 @@ function DisplayAll(){
  
     return (
         <div className='displayAllPage'>
+          <nav>
+            <div id='back'><Link to="/landingPage">Back</Link></div>
+            <div id='addBtn'><Link >Add Recipe</Link></div>
+            
+          </nav>
             <div className="container">
                 <div className='searchResContainer'>
                     <div className="searchRes">
