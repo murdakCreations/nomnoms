@@ -9,11 +9,11 @@ const RecipeSchema = new mongoose.Schema({
         {
             ingredientName: {
                 type: String,
-                required: true
+                required: false
             },
             ingredientQuantity: {
                 type: Number,
-                required: true
+                required: false
             },
             ingredientUnit: {
                 type: String,
@@ -27,7 +27,7 @@ const RecipeSchema = new mongoose.Schema({
     ],
     procedure: {
         type: Array,
-        required: true
+        required: false
     }
 })
 
