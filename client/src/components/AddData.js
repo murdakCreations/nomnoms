@@ -51,13 +51,17 @@ export class AddData extends Component {
 
     submitIngredient = () => {
         const {ingredientUnit, ingredientQuantity, ingredientName, ingredientCut} = this.state
+        const array = {
+            ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut
+        }
         this.setState({
-            ingredient: [{
-                ingredientName,
-                ingredientQuantity,
-                ingredientUnit,
-                ingredientCut
-            }]
+            ingredient: [
+                ...this.state.ingredient,
+                array
+            ]
         })
     }
 
@@ -70,6 +74,13 @@ export class AddData extends Component {
                         <input id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
                         <div className="addForm">
                             <h3>Ingredient/s:</h3>
+                            <div>{ // display added ingredient here
+                                this.state.ingredient.map((val,key) => {
+                                    return <div key={key} className="addedIngredient" >
+                                        {val.ingredientQuantity} {val.ingredientUnit} {val.ingredientName} {val.ingredientCut} 
+                                    </div>
+                                })
+                            }</div>
                             <form action="" id="addIng">
                                 <label>Quantity:</label>
                                 <input type="number" name="ingredientQuantity" value={ingredientQuantity} onChange={this.handleChangeIngredientQuantity}/>
