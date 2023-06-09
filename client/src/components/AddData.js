@@ -78,6 +78,8 @@ export class AddData extends Component {
                                 this.state.ingredient.map((val,key) => {
                                     return <div key={key} className="addedIngredient" >
                                         {val.ingredientQuantity} {val.ingredientUnit} {val.ingredientName} {val.ingredientCut} 
+                                        <a href="#">Edit</a>
+                                        <a href="#">Delete</a>
                                     </div>
                                 })
                             }</div>
