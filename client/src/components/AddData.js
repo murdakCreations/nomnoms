@@ -49,6 +49,16 @@ export class AddData extends Component {
         this.setState({ ingredientCut: value })
     }
 
+    displayIngForm = e => {
+        document.getElementById("addIng").style.display = "block"
+        document.getElementById(e.target.id).style.display = "none"
+    }
+
+    hideIngForm = () => {
+        document.getElementById("addIng").style.display = "none"
+        document.getElementById("displayIng").style.display = "block"
+    }
+
     submitIngredient = () => {
         const {ingredientUnit, ingredientQuantity, ingredientName, ingredientCut} = this.state
         const array = {
@@ -74,6 +84,7 @@ export class AddData extends Component {
                         <input id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
                         <div className="addForm">
                             <h3>Ingredient/s:</h3>
+                            <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
                             <div>{ // display added ingredient here
                                 this.state.ingredient.map((val,key) => {
                                     return <div key={key} className="addedIngredient" >
@@ -83,7 +94,7 @@ export class AddData extends Component {
                                     </div>
                                 })
                             }</div>
-                            <form action="" id="addIng">
+                            <form action="" id="addIng" style={{display: "none"}}>
                                 <label>Quantity:</label>
                                 <input type="number" name="ingredientQuantity" value={ingredientQuantity} onChange={this.handleChangeIngredientQuantity}/>
                                 <br/>
@@ -97,7 +108,7 @@ export class AddData extends Component {
                                 <input type="text" name="ingredientUnit" value={ingredientCut} onChange={this.handleChangeIngredientCut}/>
                                 <br/>
                                 <input type="button" value="add ingredient" onClick={this.submitIngredient}/>
-                                <input type="button" value="close"/>
+                                <input type="button" value="close" onClick={this.hideIngForm}/>
                             </form>
                         </div>
                         {/*<div className="addForm">
