@@ -11,7 +11,10 @@ export class AddData extends Component {
             ingredientName: "",
             ingredientQuantity: 0,
             ingredientUnit: "",
-            ingredientCut: ""
+            ingredientCut: "",
+            procedure: [],
+            procedureNum: 0,
+            procedureContent: ""
         }
     }
 
@@ -19,7 +22,8 @@ export class AddData extends Component {
     addNewRecipe = () => {
         Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
             recipeName: this.state.recipeName,
-            ingredient: this.state.ingredient
+            ingredient: this.state.ingredient,
+            procedure: this.state.procedure
         })
     }
 
@@ -75,8 +79,34 @@ export class AddData extends Component {
         })
     }
 
+    handleChangeProcedureNum = e => {
+        const {value} = e.target
+        this.setState({ procedureNum: value })
+    }
+
+    handleChangeProcedureContent = e => {
+        const {value} = e.target
+        this.setState({ procedureContent: value })
+    }
+
+    submitProcedure = () => {
+        const {procedure, procedureNum, procedureContent} = this.state
+        procedure[procedureNum] = procedureContent
+        this.setState({ procedure })
+    }
+
+    displayProcForm = e => {
+        document.getElementById("addProc").style.display = "block"
+        document.getElementById(e.target.id).style.display = "none"
+    }
+
+    hideProcForm = () => {
+        document.getElementById("addProc").style.display = "none"
+        document.getElementById("displayProc").style.display = "block"
+    }
+
     render() {
-        const {recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut} = this.state
+        const { ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
         return (
             <div className="addData">
                 <div className="container">
@@ -86,7 +116,7 @@ export class AddData extends Component {
                             <h3>Ingredient/s:</h3>
                             <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
                             <div>{ // display added ingredient here
-                                this.state.ingredient.map((val,key) => {
+                                ingredient.map((val,key) => {
                                     return <div key={key} className="addedIngredient" >
                                         {val.ingredientQuantity} {val.ingredientUnit} {val.ingredientName} {val.ingredientCut} 
                                         <a href="#">Edit</a>
@@ -111,21 +141,29 @@ export class AddData extends Component {
                                 <input type="button" value="close" onClick={this.hideIngForm}/>
                             </form>
                         </div>
-                        {/*<div className="addForm">
+                        <div className="addForm">
                             <h3>Procedure/s:</h3>
-                            <button onClick={
-                                () =>
-                                document.getElementById("addProc").style.display = "block"
-                            }>+ Add Procedure</button>
+                            <input type="button" id="displayProc" value="+Add Procedure" onClick={this.displayProcForm}/>
+                            <ol>{ // display added procedure here
+                                procedure.map((val,key) => {
+                                    return <li key={key} className="addedProcedure" >
+                                        {val} 
+                                        <a href="#">Edit</a>
+                                        <a href="#">Delete</a>
+                                    </li>
+                                })
+                            }</ol>
                             <form action="" id="addProc" style={{display: "none"}}>
-                                <input type="text" placeholder="Enter Procedure..."/>
-                                <input type="submit"/>
-                                <input type="button" onClick={
-                                () =>
-                                document.getElementById("addProc").style.display = "none"
-                                } value="close"/>
+                                <label>Procedure Number:</label>
+                                <input type="number" name="procedureNum" value={procedureNum} onChange={this.handleChangeProcedureNum}/>
+                                <br/>
+                                <label>Procedure:</label>
+                                <input type="text" name="procedureContent" value={procedureContent} onChange={this.handleChangeProcedureContent}/>
+                                <br/>
+                                <input type="button" value="add procedure" onClick={this.submitProcedure}/>
+                                <input type="button" value="close" onClick={this.hideProcForm}/>
                             </form>
-                        </div>*/}
+                        </div>
                         <input type="submit"/>
                         <Link to="/displayAll">Back</Link>
                     </form>
