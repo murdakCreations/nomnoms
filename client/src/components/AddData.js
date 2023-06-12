@@ -14,7 +14,8 @@ export class AddData extends Component {
             ingredientCut: "",
             procedure: [],
             procedureNum: 0,
-            procedureContent: ""
+            procedureContent: "",
+            currentIndexIng: 0
         }
     }
 
@@ -105,6 +106,12 @@ export class AddData extends Component {
         document.getElementById("displayProc").style.display = "block"
     }
 
+    handleDelIng = (index) => {
+        const {ingredient} = this.state
+        ingredient.splice(index, 1)
+        this.setState({ingredient})
+    }
+
     render() {
         const { ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
         return (
@@ -120,7 +127,7 @@ export class AddData extends Component {
                                     return <div key={key} className="addedIngredient" >
                                         {val.ingredientQuantity} {val.ingredientUnit} {val.ingredientName} {val.ingredientCut} 
                                         <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
+                                        <input type="button" value="Delete" onClick={() => {this.handleDelIng(key)}}/>
                                     </div>
                                 })
                             }</div>
