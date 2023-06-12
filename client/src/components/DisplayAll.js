@@ -9,7 +9,7 @@ function DisplayAll(){
       
       // GET using Axios search ingredient
       useEffect(() => {
-        Axios.get(`https://nomnoms-backend.vercel.app/get-recipe`).then(({ data }) => {
+        Axios.get(`http://localhost:8080/get-recipe`).then(({ data }) => {
           setAllData(data.data.recipes)
         })
       },[])

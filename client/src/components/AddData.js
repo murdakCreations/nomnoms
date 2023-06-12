@@ -21,7 +21,7 @@ export class AddData extends Component {
 
     // POST using Axios
     addNewRecipe = () => {
-        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
+        Axios.post('http://localhost:8080/add-recipe', {
             recipeName: this.state.recipeName,
             ingredient: this.state.ingredient,
             procedure: this.state.procedure
@@ -112,6 +112,12 @@ export class AddData extends Component {
         this.setState({ingredient})
     }
 
+    handleEditIng = (index, inputID) => {
+        const text = this.state.ingredient[index]
+        document.getElementById("insertHere").innerHTML = `<input value="${text.ingredientQuantity} ${text.ingredientUnit} ${text.ingredientName} ${text.ingredientCut}"/>
+        <input type="button" value="ok"/><input type="button" value="close"/>`
+    }
+
     render() {
         const { ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
         return (
@@ -121,16 +127,20 @@ export class AddData extends Component {
                         <input id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
                         <div className="addForm">
                             <h3>Ingredient/s:</h3>
-                            <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
                             <div>{ // display added ingredient here
                                 ingredient.map((val,key) => {
                                     return <div key={key} className="addedIngredient" >
-                                        {val.ingredientQuantity} {val.ingredientUnit} {val.ingredientName} {val.ingredientCut} 
-                                        <a href="#">Edit</a>
+                                        <input id={key} value={val.ingredientQuantity +" "+ val.ingredientUnit+
+                                        " " + val.ingredientName + " " + val.ingredientCut} disabled/>
+                                        <input type="button" value="Edit" onClick={() => {this.handleEditIng(key, key)}}/>
                                         <input type="button" value="Delete" onClick={() => {this.handleDelIng(key)}}/>
                                     </div>
                                 })
                             }</div>
+                            <div id="insertHere">
+                                
+                            </div>
+                            <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
                             <form action="" id="addIng" style={{display: "none"}}>
                                 <label>Quantity:</label>
                                 <input type="number" name="ingredientQuantity" value={ingredientQuantity} onChange={this.handleChangeIngredientQuantity}/>
