@@ -5,6 +5,7 @@ import Axios from 'axios'
 export class AddData extends Component {
     constructor(){
         super()
+        
         this.state = {
             recipeName: "",
             ingredient: [],
@@ -15,13 +16,17 @@ export class AddData extends Component {
             procedure: [],
             procedureNum: 0,
             procedureContent: "",
-            currentIndexIng: 0
+            currentIndexIng: 0,
+            ingredientNameEdit: "",
+            ingredientQuantityEdit: 0,
+            ingredientUnitEdit: "",
+            ingredientCutEdit: ""
         }
     }
 
     // POST using Axios
     addNewRecipe = () => {
-        Axios.post('http://localhost:8080/add-recipe', {
+        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
             recipeName: this.state.recipeName,
             ingredient: this.state.ingredient,
             procedure: this.state.procedure
@@ -107,15 +112,102 @@ export class AddData extends Component {
     }
 
     handleDelIng = (index) => {
+        console.log(index)
         const {ingredient} = this.state
         ingredient.splice(index, 1)
         this.setState({ingredient})
     }
 
-    handleEditIng = (index, inputID) => {
+    handleChangeIngredientNameEdit = e => {
+        const {value} = e.target
+        this.setState({ ingredientNameEdit: value })
+    }
+
+    handleChangeIngredientUnitEdit = e => {
+        const {value} = e.target
+        this.setState({ ingredientUnitEdit: value })
+    }
+
+    handleChangeIngredientQuantityEdit = e => {
+        const {value} = e.target
+        this.setState({ ingredientQuantityEdit: value })
+    }
+
+    handleChangeIngredientCutEdit = e => {
+        const {value} = e.target
+        this.setState({ ingredientCutEdit: value })
+    }
+    
+    saveOnPageEditIng = () => {
+        const {ingredientUnit, ingredientQuantity, ingredientName, ingredientCut,
+            ingredientNameEdit,ingredientQuantityEdit,
+        ingredientUnitEdit,ingredientCutEdit, ingredient, currentIndexIng} = this.state
+        
+        const array = {
+            ingredientName: ingredientNameEdit,
+            ingredientQuantity: ingredientQuantityEdit,
+            ingredientUnit: ingredientUnitEdit,
+            ingredientCut: ingredientCutEdit
+        }
+        ingredient[currentIndexIng] = array
+        this.setState({
+            ingredient
+        })
+        
+    }
+
+    handleEditIng = (index) => {
+        const {ingredientName,
+        ingredientQuantity,
+        ingredientUnit,
+        ingredientCut} = this.state
         const text = this.state.ingredient[index]
-        document.getElementById("insertHere").innerHTML = `<input value="${text.ingredientQuantity} ${text.ingredientUnit} ${text.ingredientName} ${text.ingredientCut}"/>
-        <input type="button" value="ok"/><input type="button" value="close"/>`
+        this.setState({currentIndexIng: index})
+        const container = document.getElementById("insertHere")
+        
+        container.style.display = "block"
+        // Create multiple input elements
+        var values = [ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut];
+
+        var labels = ["Ingredient Name: ",
+            "Ingredient Quantity: ",
+            "Ingredient Unit: ",
+            "Ingredient Cut: "];
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeIngredientNameEdit)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeIngredientQuantityEdit)
+            }
+            if(i == 2) {
+                div.addEventListener('change', this.handleChangeIngredientUnitEdit)
+            }
+            if(i == 3) {
+                div.addEventListener('change', this.handleChangeIngredientCutEdit)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'CLICK'
+        btn.addEventListener('click', this.saveOnPageEditIng);
+        container.appendChild(btn);
     }
 
     render() {
@@ -132,8 +224,8 @@ export class AddData extends Component {
                                     return <div key={key} className="addedIngredient" >
                                         <input id={key} value={val.ingredientQuantity +" "+ val.ingredientUnit+
                                         " " + val.ingredientName + " " + val.ingredientCut} disabled/>
-                                        <input type="button" value="Edit" onClick={() => {this.handleEditIng(key, key)}}/>
-                                        <input type="button" value="Delete" onClick={() => {this.handleDelIng(key)}}/>
+                                        <input type="button" value="Edit" onClick={() => this.handleEditIng(key)}/>
+                                        <input type="button" value="Delete" onClick={() => this.handleDelIng(key)}/>
                                     </div>
                                 })
                             }</div>
