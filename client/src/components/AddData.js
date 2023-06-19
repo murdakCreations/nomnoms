@@ -26,7 +26,7 @@ export class AddData extends Component {
 
     // POST using Axios
     addNewRecipe = () => {
-        Axios.post('http://localhost:8080/add-recipe', {
+        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
             recipeName: this.state.recipeName,
             ingredient: this.state.ingredient,
             procedure: this.state.procedure
@@ -81,7 +81,11 @@ export class AddData extends Component {
             ingredient: [
                 ...this.state.ingredient,
                 array
-            ]
+            ],
+            ingredientName: "",
+            ingredientQuantity: 0,
+            ingredientUnit: "",
+            ingredientCut: ""
         })
     }
 
@@ -157,6 +161,11 @@ export class AddData extends Component {
         
     }
 
+    closeOnPageEditIng = () => {
+        const container = document.getElementById("subContainer")
+        container.innerHTML = ""
+    }
+
     handleEditIng = (index) => {
         const {ingredientName,
         ingredientQuantity,
@@ -213,9 +222,14 @@ export class AddData extends Component {
         // Set up the button
         const btn = document.createElement('input')
         btn.type = 'button'
-        btn.value = 'CLICK'
+        btn.value = 'Save'
         btn.addEventListener('click', this.saveOnPageEditIng);
         container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.closeOnPageEditIng);
+        container.appendChild(closeBtn);
     }
 
     render() {
