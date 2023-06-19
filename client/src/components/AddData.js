@@ -26,7 +26,7 @@ export class AddData extends Component {
 
     // POST using Axios
     addNewRecipe = () => {
-        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
+        Axios.post('http://localhost:8080/add-recipe', {
             recipeName: this.state.recipeName,
             ingredient: this.state.ingredient,
             procedure: this.state.procedure
@@ -112,10 +112,11 @@ export class AddData extends Component {
     }
 
     handleDelIng = (index) => {
-        console.log(index)
         const {ingredient} = this.state
         ingredient.splice(index, 1)
         this.setState({ingredient})
+        const editForm = document.getElementById('subContainer')
+        editForm.innerHTML = ""
     }
 
     handleChangeIngredientNameEdit = e => {
@@ -163,9 +164,16 @@ export class AddData extends Component {
         ingredientCut} = this.state
         const text = this.state.ingredient[index]
         this.setState({currentIndexIng: index})
-        const container = document.getElementById("insertHere")
+        const mainContainer = document.getElementById("insertHere")
         
-        container.style.display = "block"
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'subContainer'
+        mainContainer.appendChild(subContainer);
+        
+        const container = document.getElementById("subContainer")
+        container.innerHTML = ""
+
         // Create multiple input elements
         var values = [ingredientName,
             ingredientQuantity,
