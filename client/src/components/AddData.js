@@ -59,14 +59,81 @@ export class AddData extends Component {
         this.setState({ ingredientCut: value })
     }
 
-    displayIngForm = e => {
-        document.getElementById("addIng").style.display = "block"
-        document.getElementById(e.target.id).style.display = "none"
+    displayIngForm = () => {
+        const {ingredientName,
+        ingredientQuantity,
+        ingredientUnit,
+        ingredientCut} = this.state
+        const mainContainer = document.getElementById("addIngForm")
+        
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'addIngSubContainer'
+        mainContainer.appendChild(subContainer);
+        
+        const container = document.getElementById("addIngSubContainer")
+        container.innerHTML = ""
+        
+        // Create multiple input elements
+        var values = [ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut];
+
+        var labels = ["Ingredient Name: ",
+            "Ingredient Quantity: ",
+            "Ingredient Unit: ",
+            "Ingredient Cut: "];
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeIngredientName)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeIngredientQuantity)
+            }
+            if(i == 2) {
+                div.addEventListener('change', this.handleChangeIngredientUnit)
+            }
+            if(i == 3) {
+                div.addEventListener('change', this.handleChangeIngredientCut)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'Add Ingredient'
+        btn.addEventListener('click', this.submitIngredient);
+        container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.hideIngForm);
+        container.appendChild(closeBtn);
+
+        // hide add ing button
+        const addIngBtn = document.getElementById("displayIng")
+        addIngBtn.style.visibility = "hidden"
     }
 
     hideIngForm = () => {
-        document.getElementById("addIng").style.display = "none"
-        document.getElementById("displayIng").style.display = "block"
+        const container = document.getElementById("addIngSubContainer")
+        container.innerHTML = ""
+
+        // unhide add ing button
+        const addIngBtn = document.getElementById("displayIng")
+        addIngBtn.style.visibility = "visible"
     }
 
     submitIngredient = () => {
@@ -278,7 +345,11 @@ export class AddData extends Component {
                                 
                             </div>
                             <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
-                            <form action="" id="addIng" style={{display: "none"}}>
+                            <div id="addIngForm">
+                                
+                            </div>
+                            
+                            {/* <form action="" id="addIng" style={{display: "none"}}>
                                 <label>Quantity:</label>
                                 <input type="number" name="ingredientQuantity" value={ingredientQuantity} onChange={this.handleChangeIngredientQuantity}/>
                                 <br/>
@@ -293,7 +364,7 @@ export class AddData extends Component {
                                 <br/>
                                 <input type="button" value="add ingredient" onClick={this.submitIngredient}/>
                                 <input type="button" value="close" onClick={this.hideIngForm}/>
-                            </form>
+                            </form> */}
                         </div>
                         <div className="addForm">
                             <h3>Procedure/s:</h3>
