@@ -81,11 +81,7 @@ export class AddData extends Component {
             ingredient: [
                 ...this.state.ingredient,
                 array
-            ],
-            ingredientName: "",
-            ingredientQuantity: 0,
-            ingredientUnit: "",
-            ingredientCut: ""
+            ]
         })
     }
 
@@ -148,13 +144,38 @@ export class AddData extends Component {
             ingredientNameEdit,ingredientQuantityEdit,
         ingredientUnitEdit,ingredientCutEdit, ingredient, currentIndexIng} = this.state
         
-        const array = {
-            ingredientName: ingredientNameEdit,
-            ingredientQuantity: ingredientQuantityEdit,
-            ingredientUnit: ingredientUnitEdit,
-            ingredientCut: ingredientCutEdit
+        // check if edit variable is empty or the value hasn't change
+        
+        if(ingredientCutEdit != "") {
+            this.setState({
+                ingredientCut: ingredientCutEdit
+            })
         }
+        if(ingredientNameEdit != "") {
+            this.setState({
+                ingredientName: ingredientNameEdit
+            })
+        }
+        if(ingredientQuantityEdit != "") {
+            this.setState({
+                ingredientQuantity: ingredientQuantityEdit
+            })
+        }
+        if(ingredientUnitEdit != "") {
+            this.setState({
+                ingredientUnit: ingredientUnitEdit
+            })
+        }
+
+        const array = {
+            ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut
+        }
+
         ingredient[currentIndexIng] = array
+        
         this.setState({
             ingredient
         })
@@ -180,9 +201,10 @@ export class AddData extends Component {
         subContainer.id = 'subContainer'
         mainContainer.appendChild(subContainer);
         
+        console.log(ingredientName)
         const container = document.getElementById("subContainer")
         container.innerHTML = ""
-
+        
         // Create multiple input elements
         var values = [ingredientName,
             ingredientQuantity,
@@ -201,6 +223,7 @@ export class AddData extends Component {
             
             var div = document.createElement("input")
             div.value = values[i]
+            
             if(i == 0) {
                 div.addEventListener('change', this.handleChangeIngredientNameEdit)
             }
