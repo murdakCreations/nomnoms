@@ -252,6 +252,10 @@ export class AddData extends Component {
     closeOnPageEditIng = () => {
         const container = document.getElementById("subContainer")
         container.innerHTML = ""
+
+        // unhide add ing button
+        const addIngBtn = document.getElementById("displayIng")
+        addIngBtn.style.visibility = "visible"
     }
 
     handleEditIng = (index) => {
@@ -268,9 +272,10 @@ export class AddData extends Component {
         subContainer.id = 'subContainer'
         mainContainer.appendChild(subContainer);
         
-        console.log(ingredientName)
         const container = document.getElementById("subContainer")
         container.innerHTML = ""
+        const addIngForm = document.getElementById("addIngSubContainer")
+        addIngForm.innerHTML = ""
         
         // Create multiple input elements
         var values = [ingredientName,
@@ -349,22 +354,6 @@ export class AddData extends Component {
                                 
                             </div>
                             
-                            {/* <form action="" id="addIng" style={{display: "none"}}>
-                                <label>Quantity:</label>
-                                <input type="number" name="ingredientQuantity" value={ingredientQuantity} onChange={this.handleChangeIngredientQuantity}/>
-                                <br/>
-                                <label>Unit:</label>
-                                <input type="text" name="ingredientUnit" value={ingredientUnit} onChange={this.handleChangeIngredientUnit}/>
-                                <br/>
-                                <label>Ingredient:</label>
-                                <input type="text" name="ingredientUnit" value={ingredientName} onChange={this.handleChangeIngredientName}/>
-                                <br/>
-                                <label>Cut: (Optional)</label>
-                                <input type="text" name="ingredientUnit" value={ingredientCut} onChange={this.handleChangeIngredientCut}/>
-                                <br/>
-                                <input type="button" value="add ingredient" onClick={this.submitIngredient}/>
-                                <input type="button" value="close" onClick={this.hideIngForm}/>
-                            </form> */}
                         </div>
                         <div className="addForm">
                             <h3>Procedure/s:</h3>
