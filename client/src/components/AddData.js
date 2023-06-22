@@ -20,7 +20,10 @@ export class AddData extends Component {
             ingredientNameEdit: "",
             ingredientQuantityEdit: 0,
             ingredientUnitEdit: "",
-            ingredientCutEdit: ""
+            ingredientCutEdit: "",
+            procedureNumEdit: 0,
+            procedureContentEdit: "",
+            currentIndexProc: 0
         }
     }
 
@@ -166,16 +169,74 @@ export class AddData extends Component {
         const {procedure, procedureNum, procedureContent} = this.state
         procedure[procedureNum] = procedureContent
         this.setState({ procedure })
+        console.log(procedure)
     }
 
-    displayProcForm = e => {
-        document.getElementById("addProc").style.display = "block"
-        document.getElementById(e.target.id).style.display = "none"
+    displayProcForm = () => {
+        const {procedureNum,
+            procedureContent} = this.state
+        const mainContainer = document.getElementById("addProcForm")
+        
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'addProcSubContainer'
+        mainContainer.appendChild(subContainer);
+        
+        const container = document.getElementById("addProcSubContainer")
+        container.innerHTML = ""
+        
+        // Create input elements for adding
+        var values = [procedureNum,
+            procedureContent];
+
+        var labels = ["Procedure Number: ",
+            "Procedure: "];
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeProcedureNum)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeProcedureContent)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+        
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'Add Procedure'
+        btn.addEventListener('click', this.submitProcedure);
+        container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.hideProcForm);
+        container.appendChild(closeBtn);
+    
+            
+        // hide add proc button
+        const addIngBtn = document.getElementById("displayProc")
+        addIngBtn.style.visibility = "hidden"
     }
 
     hideProcForm = () => {
-        document.getElementById("addProc").style.display = "none"
-        document.getElementById("displayProc").style.display = "block"
+        const container = document.getElementById("addProcSubContainer")
+        container.innerHTML = ""
+
+        // unhide add proc button
+        const addProcBtn = document.getElementById("displayProc")
+        addProcBtn.style.visibility = "visible"
     }
 
     handleDelIng = (index) => {
@@ -327,6 +388,126 @@ export class AddData extends Component {
         container.appendChild(closeBtn);
     }
 
+    handleChangeProcedureNumEdit = e => {
+        const {value} = e.target
+        this.setState({ procedureNumEdit: value })
+    }
+
+    handleChangeProcedureContentEdit = e => {
+        const {value} = e.target
+        this.setState({ procedureContentEdit: value })
+    }
+
+    handleEditProc = (index) => {
+        const {procedureNum,
+            procedureContent} = this.state
+        const text = this.state.procedure[index]
+        this.setState({currentIndexProc: index})
+        const mainContainer = document.getElementById("insertEditProcFormHere")
+        
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'subContainerProc'
+        mainContainer.appendChild(subContainer);
+        
+        const container = document.getElementById("subContainerProc")
+        container.innerHTML = ""
+        const addProcForm = document.getElementById("addProcForm")
+        addProcForm.innerHTML = ""
+        
+        // Create input elements for editing
+        var values = [procedureNum,
+            procedureContent];
+
+        var labels = ["Procedure Number: ",
+            "Procedure: "];
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeProcedureNumEdit)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeProcedureContentEdit)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+        
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'Save'
+        btn.addEventListener('click', this.saveOnPageEditProc);
+        container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.closeOnPageEditProc);
+        container.appendChild(closeBtn);
+    }
+
+    handleDelProc = (index) => {
+        const {procedure} = this.state
+        procedure.splice(index, 1)
+        this.setState({procedure})
+    }
+
+    saveOnPageEditProc = () => {
+        const {procedureNum,
+            procedureContent,
+            procedureNumEdit,
+            procedureContentEdit,
+            procedure,
+            currentIndexProc} = this.state
+        
+
+        // check if edit variable is empty or the value hasn't change
+        
+        if(procedureNumEdit != "") {
+            this.setState({
+                procedureNum: procedureNumEdit
+            })
+        }
+        if(procedureContentEdit != "") {
+            this.setState({
+                procedureContent: procedureContentEdit
+            })
+        }
+
+
+        if(currentIndexProc != procedureNum) {
+            procedure[currentIndexProc] = ""
+            procedure[procedureNum] = procedureContent
+        }
+        if(currentIndexProc == procedureNum) {
+            procedure[procedureNum] = procedureContent
+        }
+        
+
+        this.setState({
+            procedure
+        })
+        
+    }
+
+    closeOnPageEditProc = () => {
+        const container = document.getElementById("subContainerProc")
+        container.innerHTML = ""
+
+        // unhide add ing button
+        const addIngBtn = document.getElementById("displayProc")
+        addIngBtn.style.visibility = "visible"
+    }
+
     render() {
         const { ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
         return (
@@ -357,26 +538,22 @@ export class AddData extends Component {
                         </div>
                         <div className="addForm">
                             <h3>Procedure/s:</h3>
-                            <input type="button" id="displayProc" value="+Add Procedure" onClick={this.displayProcForm}/>
                             <ol>{ // display added procedure here
                                 procedure.map((val,key) => {
                                     return <li key={key} className="addedProcedure" >
-                                        {val} 
-                                        <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
+                                        <input id={key} value={val} disabled/>
+                                        <input type="button" value="Edit" onClick={() => this.handleEditProc(key)}/>
+                                        <input type="button" value="Delete" onClick={() => this.handleDelProc(key)}/>
                                     </li>
                                 })
                             }</ol>
-                            <form action="" id="addProc" style={{display: "none"}}>
-                                <label>Procedure Number:</label>
-                                <input type="number" name="procedureNum" value={procedureNum} onChange={this.handleChangeProcedureNum}/>
-                                <br/>
-                                <label>Procedure:</label>
-                                <input type="text" name="procedureContent" value={procedureContent} onChange={this.handleChangeProcedureContent}/>
-                                <br/>
-                                <input type="button" value="add procedure" onClick={this.submitProcedure}/>
-                                <input type="button" value="close" onClick={this.hideProcForm}/>
-                            </form>
+                            <div id="insertEditProcFormHere">
+                                
+                            </div>
+                            <input type="button" id="displayProc" value="+Add Procedure" onClick={this.displayProcForm}/>
+                            <div id="addProcForm">
+                                
+                            </div>
                         </div>
                         <input type="submit"/>
                         <Link to="/displayAll">Back</Link>
