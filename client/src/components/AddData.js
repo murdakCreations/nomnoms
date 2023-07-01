@@ -54,7 +54,7 @@ export class AddData extends Component {
 
     handleChangeIngredientName = e => {
         const {value} = e.target
-        this.setState({ ingredientName: value })
+        this.setState({ ingredientName: value.toLowerCase() })
     }
 
     handleChangeIngredientCut = e => {
@@ -249,7 +249,7 @@ export class AddData extends Component {
 
     handleChangeIngredientNameEdit = e => {
         const {value} = e.target
-        this.setState({ ingredientNameEdit: value })
+        this.setState({ ingredientNameEdit: value.toLowerCase() })
     }
 
     handleChangeIngredientUnitEdit = e => {
