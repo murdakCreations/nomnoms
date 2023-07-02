@@ -1,0 +1,63 @@
+.addData .container form {
+    text-align: center;
+}
+
+.addData .addForm {
+    display: inline-block;
+    background-color: #363231;
+    padding: 1.5em;
+    border-radius: 1em;
+    margin: 2em;
+}
+
+.addData .addForm li {
+    margin: 1em;
+}
+
+.addData .addForm input {
+    border: none;
+    background-color: #363231;
+    color: #fff;
+    margin-top: 1.5em;
+    padding: 0.5em;
+}
+
+.addData .addForm input:hover {
+    background-color: #282525;
+}
+
+#recipeName {
+    border: none;
+    background-color: #1C1D1F;
+    width: 30rem;
+    height: 3rem;
+    color: #fff;
+    font-size: 2rem;
+    padding: 0.5rem;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+#recipeName::placeholder {
+    color: #fff;
+    font-family: 'Jockey One', sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.addData .subcontainer {
+    padding: 0 15em 0 15em;
+}
+
+.addData .saveClose {
+    text-align: right;
+}
+
+.addData .save {
+    border: none;
+    background-color: #34BA13;
+    color: #fff;
+    padding: 0.8em;
+    border-radius: 1em;
+    margin: 0.5em;
+}

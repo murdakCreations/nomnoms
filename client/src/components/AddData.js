@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import { Link } from "react-router-dom"
 import Axios from 'axios'
+import './AddData.css'
 
 export class AddData extends Component {
     constructor(){
@@ -100,6 +101,7 @@ export class AddData extends Component {
             }
             if(i == 1) {
                 div.addEventListener('change', this.handleChangeIngredientQuantity)
+                div.type = 'number'
             }
             if(i == 2) {
                 div.addEventListener('change', this.handleChangeIngredientUnit)
@@ -201,6 +203,7 @@ export class AddData extends Component {
             div.value = values[i]
             if(i == 0) {
                 div.addEventListener('change', this.handleChangeProcedureNum)
+                div.type = 'number'
             }
             if(i == 1) {
                 div.addEventListener('change', this.handleChangeProcedureContent)
@@ -362,6 +365,7 @@ export class AddData extends Component {
             }
             if(i == 1) {
                 div.addEventListener('change', this.handleChangeIngredientQuantityEdit)
+                div.type = 'number'
             }
             if(i == 2) {
                 div.addEventListener('change', this.handleChangeIngredientUnitEdit)
@@ -431,6 +435,7 @@ export class AddData extends Component {
             div.value = values[i]
             if(i == 0) {
                 div.addEventListener('change', this.handleChangeProcedureNumEdit)
+                div.disabled = 'true'
             }
             if(i == 1) {
                 div.addEventListener('change', this.handleChangeProcedureContentEdit)
@@ -514,49 +519,56 @@ export class AddData extends Component {
             <div className="addData">
                 <div className="container">
                     <form onSubmit={this.addNewRecipe}>
-                        <input id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
-                        <div className="addForm">
-                            <h3>Ingredient/s:</h3>
-                            <div>{ // display added ingredient here
-                                ingredient.map((val,key) => {
-                                    return <div key={key} className="addedIngredient" >
-                                        <input id={key} value={val.ingredientQuantity +" "+ val.ingredientUnit+
-                                        " " + val.ingredientName + " " + val.ingredientCut} disabled/>
-                                        <input type="button" value="Edit" onClick={() => this.handleEditIng(key)}/>
-                                        <input type="button" value="Delete" onClick={() => this.handleDelIng(key)}/>
-                                    </div>
-                                })
-                            }</div>
-                            <div id="insertHere">
+                        <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
+                        <div className="subcontainer">
+                            <div className="addForm">
+                                <h3>Ingredient/s:</h3>
+                                <div>{ // display added ingredient here
+                                    ingredient.map((val,key) => {
+                                        return <div key={key} className="addedIngredient" >
+                                            <input id={key} value={val.ingredientQuantity +" "+ val.ingredientUnit+
+                                            " " + val.ingredientName + " " + val.ingredientCut} disabled/>
+                                            <input type="button" value="Edit" onClick={() => this.handleEditIng(key)}/>
+                                            <input type="button" value="Delete" onClick={() => this.handleDelIng(key)}/>
+                                        </div>
+                                    })
+                                }</div>
+                                <div id="insertHere">
+                                    
+                                </div>
+                                <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
+                                <div id="addIngForm">
+                                    
+                                </div>
                                 
                             </div>
-                            <input type="button" id="displayIng" value="+Add Ingredient" onClick={this.displayIngForm}/>
-                            <div id="addIngForm">
-                                
+                            <div className="addForm">
+                                <h3>Procedure/s:</h3>
+                                <ol>{ // display added procedure here
+                                    procedure.map((val,key) => {
+                                        return <li key={key} className="addedProcedure" >
+                                            <input id={key} value={val} disabled/>
+                                            <input type="button" value="Edit" onClick={() => this.handleEditProc(key)}/>
+                                            <input type="button" value="Delete" onClick={() => this.handleDelProc(key)}/>
+                                        </li>
+                                    })
+                                }</ol>
+                                <div id="insertEditProcFormHere">
+                                    
+                                </div>
+                                <input type="button" id="displayProc" value="+Add Procedure" onClick={this.displayProcForm}/>
+                                <div id="addProcForm">
+                                    
+                                </div>
                             </div>
-                            
                         </div>
-                        <div className="addForm">
-                            <h3>Procedure/s:</h3>
-                            <ol>{ // display added procedure here
-                                procedure.map((val,key) => {
-                                    return <li key={key} className="addedProcedure" >
-                                        <input id={key} value={val} disabled/>
-                                        <input type="button" value="Edit" onClick={() => this.handleEditProc(key)}/>
-                                        <input type="button" value="Delete" onClick={() => this.handleDelProc(key)}/>
-                                    </li>
-                                })
-                            }</ol>
-                            <div id="insertEditProcFormHere">
-                                
-                            </div>
-                            <input type="button" id="displayProc" value="+Add Procedure" onClick={this.displayProcForm}/>
-                            <div id="addProcForm">
-                                
-                            </div>
+                        <div className="subcontainer">
+                            <div className="saveClose">
+                                <input className="save" type="submit"/>
+                                <Link to="/displayAll" className="close">Back</Link>
+                            </div>  
                         </div>
-                        <input type="submit"/>
-                        <Link to="/displayAll">Back</Link>
+                        
                     </form>
                 </div>
             </div>
