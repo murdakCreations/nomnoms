@@ -9,13 +9,13 @@ function DisplayAll(){
       
       // GET using Axios search ingredient
       useEffect(() => {
-        Axios.get(`http://localhost:8080/get-recipe`).then(({ data }) => {
+        Axios.get(`https://nomnoms-backend.vercel.app/get-recipe`).then(({ data }) => {
           setAllData(data.data.recipes)
         })
       },[])
     
       const deleteRecipe = (id) => {
-        Axios.delete(`http://localhost:8080/delete-recipe/${id}`).then(() => {
+        Axios.delete(`https://nomnoms-backend.vercel.app/delete-recipe/${id}`).then(() => {
           window.location.reload('/displayAll')
         }).catch(e => {
           console.log(e)
