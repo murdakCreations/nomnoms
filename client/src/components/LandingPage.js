@@ -17,9 +17,16 @@ class LandingPage extends Component{
       // GET using Axios search ingredient
       searchRecipe = () => {
         Axios.get(`https://nomnoms-backend.vercel.app/search-recipe/${this.state.name}`).then(({ data }) => {
-          this.setState({
-            searched: data.data.recipes
-          })
+          //console.log(data.data.ingSearch===undefined)
+          if(data.data.ingSearch===undefined){
+            this.setState({
+              searched: data.data.recipeSearch
+            })
+          } else {
+            this.setState({
+              searched: data.data.ingSearch
+            })
+          }
         })
         if(!this.state.searchClick){
           this.setState({

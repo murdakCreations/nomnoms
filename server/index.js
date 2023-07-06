@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const MongoClient = require("mongodb").MongoClient
 
 app.use(express.json())
 app.use(cors())
@@ -15,7 +16,8 @@ const mongoose = require('mongoose')
 const DB = 'mongodb+srv://nom-noms:NbiI50nrttLM79dU@cluster0.ee7qx0i.mongodb.net/?retryWrites=true&w=majority'
 
 //const client = new MongoClient(DB);
-//const collection = client.db("recipesDB").collection("recipesCollection");
+//const collection = client.db("test").collection("recipes");
+
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
@@ -67,16 +69,31 @@ app.post('/add-recipe', async(req, res) => {
 
 // GET Route according to ingredient
 app.get('/search-recipe/:ingredient',async(req, res) => {
-    const recipes = await Recipe.find(
-        { ingredient: { $elemMatch: { ingredientName: {$regex: req.params.ingredient} } } }
-     )
+    const ingSearch = await Recipe.find({ 
+        ingredient: { $elemMatch: { ingredientName: {$regex: req.params.ingredient} } }
+    })
+
+    const recipeSearch = await Recipe.find({ 
+        recipeName: { $regex: req.params.ingredient}
+    })
     try{
-        res.status(200).json({
-            status: 'Success',
-            data: {
-                recipes
-            }
-        })
+        //console.log(Object.keys(ingSearch).length !== 0)
+        if(Object.keys(ingSearch).length !== 0){
+            res.status(200).json({
+                status: 'Success',
+                data: {
+                    ingSearch
+                }            
+            })
+        }
+        else if(Object.keys(recipeSearch).length !== 0){
+            res.status(200).json({
+                status: 'Success',
+                data: {
+                    recipeSearch
+                }            
+            })
+        }
     }catch(err){
         res.status(500).json({
             status: 'Failed',
