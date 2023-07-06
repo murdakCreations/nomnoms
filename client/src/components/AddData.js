@@ -30,7 +30,7 @@ export class AddData extends Component {
 
     // POST using Axios
     addNewRecipe = () => {
-        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
+        Axios.post('http://localhost:8080/add-recipe', {
             recipeName: this.state.recipeName,
             ingredient: this.state.ingredient,
             procedure: this.state.procedure
