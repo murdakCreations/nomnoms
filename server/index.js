@@ -102,3 +102,20 @@ app.get('/search-recipe/:ingredient',async(req, res) => {
         console.log(err)
     }
 })
+
+// DELETE Route according to recipe name
+app.delete('/delete-recipe/:id', async(req,res) => {
+    await Recipe.findByIdAndDelete(req.params.id)
+
+    try {
+        res.status(204).json({
+            status: 'Success',
+            data: {}
+        })
+    } catch (err) {
+        res.status(500).json({
+            status: 'Failed',
+            message: err
+        })
+    }
+})

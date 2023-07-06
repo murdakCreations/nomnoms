@@ -14,6 +14,13 @@ function DisplayAll(){
         })
       },[])
     
+      const deleteRecipe = (id) => {
+        Axios.delete(`https://nomnoms-backend.vercel.app/delete-recipe/${id}`).then(() => {
+          window.location.reload('/displayAll')
+        }).catch(e => {
+          console.log(e)
+        })
+      }
     
  
     return (
@@ -34,6 +41,11 @@ function DisplayAll(){
                                     <img src="img/chicken-inasal.png" alt="chicken-inasal"/>
                                     <div className="resLbl">{val.recipeName}</div>
                                 </Link>
+                                <div>
+                                  <button>View</button>
+                                  <button>Edit</button>
+                                  <button onClick={() => deleteRecipe(val._id)}>Delete</button>
+                                </div>
                             </div>
                           })
                         }
