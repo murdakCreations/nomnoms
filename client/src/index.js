@@ -5,7 +5,7 @@ import { Home } from "./components/Home"
 import LandingPage from './components/LandingPage';
 import Recipes from './components/Recipes';
 import DisplayAll from './components/DisplayAll';
-import { AddData } from './components/AddData';
+import AddData  from './components/AddData';
 import EditData from './components/EditData'
 
 import {

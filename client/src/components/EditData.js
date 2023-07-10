@@ -13,16 +13,19 @@ class EditData extends Component {
         super()
         
         this.state = {
-            recipeName: "",
-            ingredient: [],
-            ingredientName: "",
-            ingredientQuantity: 0,
-            ingredientUnit: "",
-            ingredientCut: "",
-            procedure: [],
+            currentRecipe:{
+                recipeName: "",
+                ingredient: [],
+                ingredientName: "",
+                ingredientQuantity: 0,
+                ingredientUnit: "",
+                ingredientCut: "",
+                procedure: [],
+                currentIndexIng: 0,
+                recipe: []
+            },
             procedureNum: 0,
             procedureContent: "",
-            currentIndexIng: 0,
             ingredientNameEdit: "",
             ingredientQuantityEdit: 0,
             ingredientUnitEdit: "",
@@ -30,8 +33,9 @@ class EditData extends Component {
             procedureNumEdit: 0,
             procedureContentEdit: "",
             currentIndexProc: 0,
-            recipe: []
+            
         }
+
     }
 
     
@@ -39,94 +43,10 @@ class EditData extends Component {
     // always make a separate component for reading values onchange
     
 
-    handleChangeIngredientQuantity = e => {
-        const {value} = e.target
-        this.setState({ ingredientQuantity: value })
-    }
+    
+    
 
-    handleChangeIngredientUnit = e => {
-        const {value} = e.target
-        this.setState({ ingredientUnit: value })
-    }
-
-    handleChangeIngredientName = e => {
-        const {value} = e.target
-        this.setState({ ingredientName: value.toLowerCase() })
-    }
-
-    handleChangeIngredientCut = e => {
-        const {value} = e.target
-        this.setState({ ingredientCut: value })
-    }
-
-    displayIngForm = () => {
-        const {ingredientName,
-        ingredientQuantity,
-        ingredientUnit,
-        ingredientCut} = this.state
-        const mainContainer = document.getElementById("addIngForm")
-        
-        // Create sub container with id
-        const subContainer = document.createElement('div')
-        subContainer.id = 'addIngSubContainer'
-        mainContainer.appendChild(subContainer);
-        
-        const container = document.getElementById("addIngSubContainer")
-        container.innerHTML = ""
-        
-        // Create multiple input elements
-        var values = [ingredientName,
-            ingredientQuantity,
-            ingredientUnit,
-            ingredientCut];
-
-        var labels = ["Ingredient Name: ",
-            "Ingredient Quantity: ",
-            "Ingredient Unit: ",
-            "Ingredient Cut: "];
-
-        for(var i = 0; i < values.length; i += 1) {
-            var lbl = document.createElement("label")
-            lbl.innerHTML = labels[i]
-            container.appendChild(lbl);
-            
-            var div = document.createElement("input")
-            div.value = values[i]
-            if(i == 0) {
-                div.addEventListener('change', this.handleChangeIngredientName)
-            }
-            if(i == 1) {
-                div.addEventListener('change', this.handleChangeIngredientQuantity)
-                div.type = 'number'
-            }
-            if(i == 2) {
-                div.addEventListener('change', this.handleChangeIngredientUnit)
-            }
-            if(i == 3) {
-                div.addEventListener('change', this.handleChangeIngredientCut)
-            }
-            container.appendChild(div);
-
-            var br = document.createElement("br")
-            container.appendChild(br);
-        }
-
-        // Set up the button
-        const btn = document.createElement('input')
-        btn.type = 'button'
-        btn.value = 'Add Ingredient'
-        btn.addEventListener('click', this.submitIngredient);
-        container.appendChild(btn);
-        const closeBtn = document.createElement('input')
-        closeBtn.type = 'button'
-        closeBtn.value = 'Close'
-        closeBtn.addEventListener('click', this.hideIngForm);
-        container.appendChild(closeBtn);
-
-        // hide add ing button
-        const addIngBtn = document.getElementById("displayIng")
-        addIngBtn.style.visibility = "hidden"
-    }
+    
 
     hideIngForm = () => {
         const container = document.getElementById("addIngSubContainer")
@@ -135,22 +55,6 @@ class EditData extends Component {
         // unhide add ing button
         const addIngBtn = document.getElementById("displayIng")
         addIngBtn.style.visibility = "visible"
-    }
-
-    submitIngredient = () => {
-        const {ingredientUnit, ingredientQuantity, ingredientName, ingredientCut} = this.state
-        const array = {
-            ingredientName,
-            ingredientQuantity,
-            ingredientUnit,
-            ingredientCut
-        }
-        this.setState({
-            ingredient: [
-                ...this.state.ingredient,
-                array
-            ]
-        })
     }
 
     handleChangeProcedureNum = e => {
@@ -318,75 +222,6 @@ class EditData extends Component {
         addIngBtn.style.visibility = "visible"
     }
 
-    handleEditIng = (index) => {
-        const {ingredientName,
-        ingredientQuantity,
-        ingredientUnit,
-        ingredientCut} = this.state
-        this.setState({currentIndexIng: index})
-        const mainContainer = document.getElementById("insertHere")
-        
-        // Create sub container with id
-        const subContainer = document.createElement('div')
-        subContainer.id = 'subContainer'
-        mainContainer.appendChild(subContainer);
-        
-        const container = document.getElementById("subContainer")
-        container.innerHTML = ""
-        const addIngForm = document.getElementById("addIngSubContainer")
-        addIngForm.innerHTML = ""
-        
-        // Create multiple input elements
-        var values = [ingredientName,
-            ingredientQuantity,
-            ingredientUnit,
-            ingredientCut];
-
-        var labels = ["Ingredient Name: ",
-            "Ingredient Quantity: ",
-            "Ingredient Unit: ",
-            "Ingredient Cut: "];
-
-        for(var i = 0; i < values.length; i += 1) {
-            var lbl = document.createElement("label")
-            lbl.innerHTML = labels[i]
-            container.appendChild(lbl);
-            
-            var div = document.createElement("input")
-            div.value = values[i]
-            
-            if(i == 0) {
-                div.addEventListener('change', this.handleChangeIngredientNameEdit)
-            }
-            if(i == 1) {
-                div.addEventListener('change', this.handleChangeIngredientQuantityEdit)
-                div.type = 'number'
-            }
-            if(i == 2) {
-                div.addEventListener('change', this.handleChangeIngredientUnitEdit)
-            }
-            if(i == 3) {
-                div.addEventListener('change', this.handleChangeIngredientCutEdit)
-            }
-            container.appendChild(div);
-
-            var br = document.createElement("br")
-            container.appendChild(br);
-        }
-
-        // Set up the button
-        const btn = document.createElement('input')
-        btn.type = 'button'
-        btn.value = 'Save'
-        btn.addEventListener('click', this.saveOnPageEditIng);
-        container.appendChild(btn);
-        const closeBtn = document.createElement('input')
-        closeBtn.type = 'button'
-        closeBtn.value = 'Close'
-        closeBtn.addEventListener('click', this.closeOnPageEditIng);
-        container.appendChild(closeBtn);
-    }
-
     handleChangeProcedureNumEdit = e => {
         const {value} = e.target
         this.setState({ procedureNumEdit: value })
@@ -512,15 +347,18 @@ class EditData extends Component {
 
     componentDidMount(){
         Axios.get(`https://nomnoms-backend.vercel.app/get-recipe/${this.props.router.params.id}`).then(({ data }) => {
-            this.setState({
-                recipe: data.data.getRecipe
-            })
+            this.setState(prevState => ({
+                currentRecipe: {
+                  ...prevState.currentRecipe,
+                  recipe: data.data.getRecipe
+                }
+            }))
         })
     }
 
     handleChangeRecipeName = e => {
         const {value} = e.target
-        this.setState({ recipeName: value })
+        this.setState({ recipeName: value.toLowerCase() })
     }
 
     // Update using Axios
@@ -536,27 +374,240 @@ class EditData extends Component {
           })
     }
 
+    submitIngredient(){
+        const {ingredientUnit, ingredientQuantity, ingredientName, ingredientCut} = this.state
+        const array = {
+            ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut
+        }
+        this.setState({
+            ingredient: [
+                ...this.state.ingredient,
+                array
+            ]
+        })
+    }
+
+    displayIngForm = () => {
+        const {ingredientName,
+        ingredientQuantity,
+        ingredientUnit,
+        ingredientCut} = this.state
+        const mainContainer = document.getElementById("addIngForm")
+        
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'addIngSubContainer'
+        mainContainer.appendChild(subContainer);
+        
+        const container = document.getElementById("addIngSubContainer")
+        container.innerHTML = ""
+        
+        // Create multiple input elements
+        var values = [ingredientName,
+            ingredientQuantity,
+            ingredientUnit,
+            ingredientCut];
+
+        var labels = ["Ingredient Name: ",
+            "Ingredient Quantity: ",
+            "Ingredient Unit: ",
+            "Ingredient Cut: "];
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeIngredientName)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeIngredientQuantity)
+                div.type = 'number'
+            }
+            if(i == 2) {
+                div.addEventListener('change', this.handleChangeIngredientUnit)
+            }
+            if(i == 3) {
+                div.addEventListener('change', this.handleChangeIngredientCut)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'Add Ingredient'
+        btn.addEventListener('click', this.submitIngredient);
+        container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.hideIngForm);
+        container.appendChild(closeBtn);
+
+        // hide add ing button
+        const addIngBtn = document.getElementById("displayIng")
+        addIngBtn.style.visibility = "hidden"
+    }
+
+    handleChangeIngredient = (ingredient) => {
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              ingredient: ingredient
+            }
+        }))
+    }
+
+    handleChangeIngredientName = e => {
+        const {value} = e.target
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              ingredientName: value
+            }
+        }))
+    }
+
+    handleChangeIngredientQuantity = e => {
+        const {value} = e.target
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              ingredientQuantity: value
+            }
+        }))
+    }
+
+    handleChangeIngredientUnit = e => {
+        const {value} = e.target
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              ingredientUnit: value
+            }
+        }))
+    }
+
+    handleChangeIngredientCut = e => {
+        const {value} = e.target
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              ingredientCut: value
+            }
+        }))
+    }
+
+    handleEditIng = (index) => {
+        const {currentRecipe} = this.state
+        //this.setState({currentIndexIng: index})
+        // this.setState(prevState => ({
+        //     currentRecipe: {
+        //       ...prevState.currentRecipe,
+        //       currentIndexIng: index
+        //     }
+        // }))
+
+        const currentIng = currentRecipe.ingredient[index]
+
+        const mainContainer = document.getElementById("insertHere")
+        
+        // Create sub container with id
+        const subContainer = document.createElement('div')
+        subContainer.id = 'subContainer'
+        mainContainer.appendChild(subContainer)
+        
+        const container = document.getElementById("subContainer")
+        container.innerHTML = ""
+        
+        // Create multiple input elements
+        var values = [currentIng.ingredientName,
+            currentIng.ingredientQuantity,
+            currentIng.ingredientUnit,
+            currentIng.ingredientCut]
+
+        var labels = ["Ingredient Name: ",
+            "Ingredient Quantity: ",
+            "Ingredient Unit: ",
+            "Ingredient Cut: "]
+
+        for(var i = 0; i < values.length; i += 1) {
+            var lbl = document.createElement("label")
+            lbl.innerHTML = labels[i]
+            container.appendChild(lbl);
+            
+            var div = document.createElement("input")
+            div.value = values[i]
+            
+            if(i == 0) {
+                div.addEventListener('change', this.handleChangeIngredientNameEdit)
+            }
+            if(i == 1) {
+                div.addEventListener('change', this.handleChangeIngredientQuantityEdit)
+                div.type = 'number'
+            }
+            if(i == 2) {
+                div.addEventListener('change', this.handleChangeIngredientUnitEdit)
+            }
+            if(i == 3) {
+                div.addEventListener('change', this.handleChangeIngredientCutEdit)
+            }
+            container.appendChild(div);
+
+            var br = document.createElement("br")
+            container.appendChild(br);
+        }
+
+        // Set up the button
+        const btn = document.createElement('input')
+        btn.type = 'button'
+        btn.value = 'Save'
+        btn.addEventListener('click', this.saveOnPageEditIng);
+        container.appendChild(btn);
+        const closeBtn = document.createElement('input')
+        closeBtn.type = 'button'
+        closeBtn.value = 'Close'
+        closeBtn.addEventListener('click', this.closeOnPageEditIng);
+        container.appendChild(closeBtn)
+    }
+
     render() {
-        const { recipe, ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
+        const { currentRecipe } = this.state
         
         return (
             <div className="editData">
                 <div className="container">
                     <form onSubmit={this.updateRecipe}>
-                        {/* recipe name input */}
-                        {
-                            recipe.map((val,key) => {
+                        { /* recipe name input */
+                            currentRecipe.recipe.map((val,key) => {
                                 return <div key={key}>
                                     <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" defaultValue={val.recipeName} onChange={this.handleChangeRecipeName}/>
                                 </div>
                             })
                         }
+                        { /* recipe name input */
+                            currentRecipe.recipe.map((val,key) => {
+                                if(val.ingredient) {
+                                    return this.handleChangeIngredient(val.ingredient)
+                                }
+                            })
+                        }
                         
-                        {/* <div className="subcontainer">
+                        <div className="subcontainer">
                             <div className="addForm">
                                 <h3>Ingredient/s:</h3>
                                 <div>{ // display added ingredient here
-                                    ingredient.map((val,key) => {
+                                    currentRecipe.ingredient.map((val,key) => {
                                         return <div key={key} className="addedIngredient" >
                                             <input id={key} value={val.ingredientQuantity +" "+ val.ingredientUnit+
                                             " " + val.ingredientName + " " + val.ingredientCut} disabled/>
@@ -574,7 +625,7 @@ class EditData extends Component {
                                 </div>
                                 
                             </div>
-                            <div className="addForm">
+                            {/* <div className="addForm">
                                 <h3>Procedure/s:</h3>
                                 <ol>{ // display added procedure here
                                     procedure.map((val,key) => {
@@ -592,8 +643,8 @@ class EditData extends Component {
                                 <div id="addProcForm">
                                     
                                 </div>
-                            </div>
-                        </div> */}
+                            </div> */}
+                        </div>
                         <div className="subcontainer">
                             <div className="saveClose">
                                 <input className="save" type="submit" value="Update"/>

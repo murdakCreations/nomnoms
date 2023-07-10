@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import Axios from 'axios'
 import './AddData.css'
 
-export class AddData extends Component {
+export default class AddData extends Component {
     constructor(){
         super()
         
@@ -24,7 +24,8 @@ export class AddData extends Component {
             ingredientCutEdit: "",
             procedureNumEdit: 0,
             procedureContentEdit: "",
-            currentIndexProc: 0
+            currentIndexProc: 0,
+            randomShit: ""
         }
     }
 
@@ -327,6 +328,7 @@ export class AddData extends Component {
     }
 
     handleEditIng = (index) => {
+        console.log(index)
         const {ingredientName,
         ingredientQuantity,
         ingredientUnit,
