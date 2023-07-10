@@ -42,8 +42,7 @@ function DisplayAll(){
                                     <div className="resLbl">{val.recipeName}</div>
                                 </Link>
                                 <div>
-                                  <button>View</button>
-                                  <button>Edit</button>
+                                  <Link to={"/editData/" + val._id}>Edit</Link>
                                   <button onClick={() => deleteRecipe(val._id)}>Delete</button>
                                 </div>
                             </div>

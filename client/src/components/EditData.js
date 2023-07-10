@@ -1,9 +1,14 @@
+// fetch parameter data
+// this.props.router.params.id
+
+import { withRouter } from '../common/with-router'
+
 import React, {Component} from "react"
 import { Link } from "react-router-dom"
 import Axios from 'axios'
-import './AddData.css'
+import './EditData.css'
 
-export class AddData extends Component {
+class EditData extends Component {
     constructor(){
         super()
         
@@ -24,28 +29,15 @@ export class AddData extends Component {
             ingredientCutEdit: "",
             procedureNumEdit: 0,
             procedureContentEdit: "",
-            currentIndexProc: 0
+            currentIndexProc: 0,
+            recipe: []
         }
     }
 
-    // POST using Axios
-    addNewRecipe = () => {
-        Axios.post('https://nomnoms-backend.vercel.app/add-recipe', {
-            recipeName: this.state.recipeName,
-            ingredient: this.state.ingredient,
-            procedure: this.state.procedure
-        }).then(() => {
-            window.location.reload('/displayAll')
-          }).catch(e => {
-            console.log(e)
-          })
-    }
+    
 
     // always make a separate component for reading values onchange
-    handleChangeRecipeName = e => {
-        const {value} = e.target
-        this.setState({ recipeName: value })
-    }
+    
 
     handleChangeIngredientQuantity = e => {
         const {value} = e.target
@@ -516,15 +508,51 @@ export class AddData extends Component {
         addIngBtn.style.visibility = "visible"
     }
 
+    // UPDATE modified functions
+
+    componentDidMount(){
+        Axios.get(`https://nomnoms-backend.vercel.app/get-recipe/${this.props.router.params.id}`).then(({ data }) => {
+            this.setState({
+                recipe: data.data.getRecipe
+            })
+        })
+    }
+
+    handleChangeRecipeName = e => {
+        const {value} = e.target
+        this.setState({ recipeName: value })
+    }
+
+    // Update using Axios
+    updateRecipe = () => {
+        Axios.put(`https://nomnoms-backend.vercel.app/update-recipe/${this.props.router.params.id}`, {
+            recipeName: this.state.recipeName,
+            // ingredient: this.state.ingredient,
+            // procedure: this.state.procedure
+        }).then(() => {
+            window.location.reload('/displayAll')
+          }).catch(e => {
+            console.log(e)
+          })
+    }
+
     render() {
-        const { ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
+        const { recipe, ingredient, recipeName, ingredientUnit, ingredientQuantity, ingredientName, ingredientCut, procedureNum, procedureContent, procedure} = this.state
+        
         return (
-            <div className="addData">
+            <div className="editData">
                 <div className="container">
-                    <form onSubmit={this.addNewRecipe}>
+                    <form onSubmit={this.updateRecipe}>
                         {/* recipe name input */}
-                        <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" value={recipeName} onChange={this.handleChangeRecipeName}/>
-                        <div className="subcontainer">
+                        {
+                            recipe.map((val,key) => {
+                                return <div key={key}>
+                                    <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" defaultValue={val.recipeName} onChange={this.handleChangeRecipeName}/>
+                                </div>
+                            })
+                        }
+                        
+                        {/* <div className="subcontainer">
                             <div className="addForm">
                                 <h3>Ingredient/s:</h3>
                                 <div>{ // display added ingredient here
@@ -565,10 +593,10 @@ export class AddData extends Component {
                                     
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="subcontainer">
                             <div className="saveClose">
-                                <input className="save" type="submit"/>
+                                <input className="save" type="submit" value="Update"/>
                                 <Link to="/displayAll" className="close">Back</Link>
                             </div>  
                         </div>
@@ -579,3 +607,5 @@ export class AddData extends Component {
         )
     }
 }
+
+export default withRouter(EditData)

@@ -119,3 +119,36 @@ app.delete('/delete-recipe/:id', async(req,res) => {
         })
     }
 })
+
+// GET recipe using id
+app.get('/get-recipe/:id',async(req, res) => {
+    const getRecipe = await Recipe.find({_id: req.params.id})
+    try{
+        res.status(200).json({
+            status: 'Success',
+            data: {
+                getRecipe
+            }
+        })
+    }catch(err){
+        console.log(err)
+    }
+})
+
+// UPDATE Route
+app.put('/update-recipe/:id',async(req, res) => {
+    const updateRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    })
+    try{
+        res.status(200).json({
+            status: 'Success',
+            data: {
+                updateRecipe
+            }
+        })
+    }catch(err){
+        console.log(err)
+    }
+})

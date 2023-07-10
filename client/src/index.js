@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage';
 import Recipes from './components/Recipes';
 import DisplayAll from './components/DisplayAll';
 import { AddData } from './components/AddData';
+import EditData from './components/EditData'
 
 import {
   createBrowserRouter,
@@ -33,7 +34,10 @@ const router = createBrowserRouter([
     path: "/addData",
     element: <AddData/>,
   },
-  
+  {
+    path: "/editData/:id",
+    element: <EditData/>,
+  },
 ]);
 
 
