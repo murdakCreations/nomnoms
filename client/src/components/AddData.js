@@ -257,22 +257,22 @@ export default class AddData extends Component {
 
     handleChangeIngredientNameEdit = e => {
         const {value} = e.target
-        this.setState({ ingredientNameEdit: value.toLowerCase() })
+        this.setState({ ingredientName: value.toLowerCase() })
     }
 
     handleChangeIngredientUnitEdit = e => {
         const {value} = e.target
-        this.setState({ ingredientUnitEdit: value })
+        this.setState({ ingredientUnit: value })
     }
 
     handleChangeIngredientQuantityEdit = e => {
         const {value} = e.target
-        this.setState({ ingredientQuantityEdit: value })
+        this.setState({ ingredientQuantity: value })
     }
 
     handleChangeIngredientCutEdit = e => {
         const {value} = e.target
-        this.setState({ ingredientCutEdit: value })
+        this.setState({ ingredientCut: value })
     }
     
     saveOnPageEditIng = () => {
@@ -280,28 +280,6 @@ export default class AddData extends Component {
             ingredientNameEdit,ingredientQuantityEdit,
         ingredientUnitEdit,ingredientCutEdit, ingredient, currentIndexIng} = this.state
         
-        // check if edit variable is empty or the value hasn't change
-        
-        if(ingredientCutEdit != "") {
-            this.setState({
-                ingredientCut: ingredientCutEdit
-            })
-        }
-        if(ingredientNameEdit != "") {
-            this.setState({
-                ingredientName: ingredientNameEdit
-            })
-        }
-        if(ingredientQuantityEdit != "") {
-            this.setState({
-                ingredientQuantity: ingredientQuantityEdit
-            })
-        }
-        if(ingredientUnitEdit != "") {
-            this.setState({
-                ingredientUnit: ingredientUnitEdit
-            })
-        }
 
         const array = {
             ingredientName,
@@ -332,7 +310,7 @@ export default class AddData extends Component {
         const {ingredientName,
         ingredientQuantity,
         ingredientUnit,
-        ingredientCut} = this.state
+        ingredientCut, ingredient} = this.state
         this.setState({currentIndexIng: index})
         const mainContainer = document.getElementById("insertHere")
         
@@ -344,13 +322,17 @@ export default class AddData extends Component {
         const container = document.getElementById("subContainer")
         container.innerHTML = ""
         const addIngForm = document.getElementById("addIngSubContainer")
-        addIngForm.innerHTML = ""
+        if(addIngForm){
+            addIngForm.innerHTML = ""
+        }
+          
+        const currentIng = ingredient[index]
         
         // Create multiple input elements
-        var values = [ingredientName,
-            ingredientQuantity,
-            ingredientUnit,
-            ingredientCut];
+        var values = [currentIng.ingredientName,
+            currentIng.ingredientQuantity,
+            currentIng.ingredientUnit,
+            currentIng.ingredientCut];
 
         var labels = ["Ingredient Name: ",
             "Ingredient Quantity: ",
@@ -397,21 +379,14 @@ export default class AddData extends Component {
         container.appendChild(closeBtn);
     }
 
-    handleChangeProcedureNumEdit = e => {
-        const {value} = e.target
-        this.setState({ procedureNumEdit: value })
-    }
-
     handleChangeProcedureContentEdit = e => {
         const {value} = e.target
-        this.setState({ procedureContentEdit: value })
+        this.setState({ procedureContent: value })
     }
 
     handleEditProc = (index) => {
-        const {procedureNum,
-            procedureContent} = this.state
-        const text = this.state.procedure[index]
-        this.setState({currentIndexProc: index})
+        const {procedure} = this.state
+        this.setState({ procedureNum: index })
         const mainContainer = document.getElementById("insertEditProcFormHere")
         
         // Create sub container with id
@@ -424,9 +399,10 @@ export default class AddData extends Component {
         const addProcForm = document.getElementById("addProcForm")
         addProcForm.innerHTML = ""
         
+        const currentProc = procedure[index]
         // Create input elements for editing
-        var values = [procedureNum,
-            procedureContent];
+        var values = [index,
+            currentProc];
 
         var labels = ["Procedure Number: ",
             "Procedure: "];
@@ -438,10 +414,6 @@ export default class AddData extends Component {
             
             var div = document.createElement("input")
             div.value = values[i]
-            if(i == 0) {
-                div.addEventListener('change', this.handleChangeProcedureNumEdit)
-                div.disabled = 'true'
-            }
             if(i == 1) {
                 div.addEventListener('change', this.handleChangeProcedureContentEdit)
             }
