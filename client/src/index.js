@@ -7,6 +7,7 @@ import Recipes from './components/Recipes';
 import DisplayAll from './components/DisplayAll';
 import AddData  from './components/AddData';
 import EditData from './components/EditData'
+import EditData2 from './components/EditData2'
 
 import {
   createBrowserRouter,
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/editData/:id",
-    element: <EditData/>,
+    element: <EditData2/>,
   },
 ]);
 

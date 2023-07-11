@@ -9,8 +9,10 @@ import Axios from 'axios'
 import './EditData.css'
 
 class EditData extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+
+        this.handleChangeIngredientName = this.handleChangeIngredientName.bind(this)
         
         this.state = {
             currentRecipe:{
@@ -35,7 +37,6 @@ class EditData extends Component {
             currentIndexProc: 0,
             
         }
-
     }
 
     
@@ -346,7 +347,7 @@ class EditData extends Component {
     // UPDATE modified functions
 
     componentDidMount(){
-        Axios.get(`https://nomnoms-backend.vercel.app/get-recipe/${this.props.router.params.id}`).then(({ data }) => {
+        Axios.get(`http://localhost:8080/get-recipe/${this.props.router.params.id}`).then(({ data }) => {
             this.setState(prevState => ({
                 currentRecipe: {
                   ...prevState.currentRecipe,
@@ -356,14 +357,19 @@ class EditData extends Component {
         })
     }
 
-    handleChangeRecipeName = e => {
-        const {value} = e.target
-        this.setState({ recipeName: value.toLowerCase() })
+    handleChangeRecipeName = (recipeName) => {
+        const lowered = recipeName.toLowerCase()
+        this.setState(prevState => ({
+            currentRecipe: {
+              ...prevState.currentRecipe,
+              recipeName: lowered
+            }
+        }))
     }
 
     // Update using Axios
     updateRecipe = () => {
-        Axios.put(`https://nomnoms-backend.vercel.app/update-recipe/${this.props.router.params.id}`, {
+        Axios.put(`http://localhost:8080/update-recipe/${this.props.router.params.id}`, {
             recipeName: this.state.recipeName,
             // ingredient: this.state.ingredient,
             // procedure: this.state.procedure
@@ -391,10 +397,7 @@ class EditData extends Component {
     }
 
     displayIngForm = () => {
-        const {ingredientName,
-        ingredientQuantity,
-        ingredientUnit,
-        ingredientCut} = this.state
+        const {currentRecipe} = this.state
         const mainContainer = document.getElementById("addIngForm")
         
         // Create sub container with id
@@ -406,10 +409,10 @@ class EditData extends Component {
         container.innerHTML = ""
         
         // Create multiple input elements
-        var values = [ingredientName,
-            ingredientQuantity,
-            ingredientUnit,
-            ingredientCut];
+        var values = [currentRecipe.ingredientName,
+            currentRecipe.ingredientQuantity,
+            currentRecipe.ingredientUnit,
+            currentRecipe.ingredientCut];
 
         var labels = ["Ingredient Name: ",
             "Ingredient Quantity: ",
@@ -470,42 +473,49 @@ class EditData extends Component {
 
     handleChangeIngredientName = e => {
         const {value} = e.target
-        this.setState(prevState => ({
-            currentRecipe: {
-              ...prevState.currentRecipe,
-              ingredientName: value
-            }
-        }))
+        console.log(value)
+        // this.setState(prevState => ({
+        //     currentRecipe: {
+        //       ...prevState.currentRecipe,
+        //       ingredientName: value
+        //     }
+        // }));
     }
 
     handleChangeIngredientQuantity = e => {
         const {value} = e.target
-        this.setState(prevState => ({
-            currentRecipe: {
-              ...prevState.currentRecipe,
-              ingredientQuantity: value
-            }
-        }))
+        console.log(value)
+        // this.setState(prevState => ({
+        //     currentRecipe: {
+        //       ...prevState.currentRecipe,
+        //       ingredientQuantity: value
+        //     }
+        // }))
     }
 
     handleChangeIngredientUnit = e => {
-        const {value} = e.target
-        this.setState(prevState => ({
-            currentRecipe: {
-              ...prevState.currentRecipe,
-              ingredientUnit: value
-            }
-        }))
+        const value = e.target.value
+        console.log(value)
+        this.setState({
+            ingredientUnit: value
+        })
+        // this.setState(prevState => ({
+        //     currentRecipe: {
+        //       ...prevState.currentRecipe,
+        //       ingredientUnit: value
+        //     }
+        // }))
     }
 
     handleChangeIngredientCut = e => {
         const {value} = e.target
-        this.setState(prevState => ({
-            currentRecipe: {
-              ...prevState.currentRecipe,
-              ingredientCut: value
-            }
-        }))
+        console.log(value)
+        // this.setState(prevState => ({
+        //     currentRecipe: {
+        //       ...prevState.currentRecipe,
+        //       ingredientCut: value
+        //     }
+        // }))
     }
 
     handleEditIng = (index) => {
@@ -590,19 +600,20 @@ class EditData extends Component {
                     <form onSubmit={this.updateRecipe}>
                         { /* recipe name input */
                             currentRecipe.recipe.map((val,key) => {
-                                return <div key={key}>
-                                    <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" defaultValue={val.recipeName} onChange={this.handleChangeRecipeName}/>
-                                </div>
-                            })
-                        }
-                        { /* recipe name input */
-                            currentRecipe.recipe.map((val,key) => {
                                 if(val.ingredient) {
                                     return this.handleChangeIngredient(val.ingredient)
                                 }
                             })
                         }
-                        
+                        { /* recipe name input */
+                            currentRecipe.recipe.map((val,key) => {
+                                if(val.recipeName) {
+                                    return this.handleChangeRecipeName(val.recipeName)
+                                }
+                            })
+                        }
+                        <input maxLength="50" id="recipeName" name="recipeName" placeholder="Type Recipe Name Here" defaultValue={currentRecipe.recipeName} onChange={this.handleChangeRecipeName}/>
+
                         <div className="subcontainer">
                             <div className="addForm">
                                 <h3>Ingredient/s:</h3>
